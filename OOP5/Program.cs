@@ -114,19 +114,19 @@ namespace OOP5
         public void ShowAllBooksSpecifiedParameter() 
         {
             const string CommandFindBookNumber = "1";
-            const string CommandFindBookTitle = "2"; 
+            const string CommandFindNameBook = "2"; 
             const string CommandFindBookAuthor = "3";
             const string CommandFindBookReleaseYear = "4";
             const string CommandGoToMainMenu = "5";
 
             bool isWorking = true;
 
-            Console.WriteLine("\nПо какому параметру вы хотите найти книгу?" + $"\n{CommandFindBookNumber} - По порядковому номеру." + $"\n{CommandFindBookTitle} - По названию книги." 
+            Console.WriteLine("\nПо какому параметру вы хотите найти книгу?" + $"\n{CommandFindBookNumber} - По порядковому номеру." + $"\n{CommandFindNameBook} - По названию книги." 
                 + $"\n{CommandFindBookAuthor} - По автору книги." + $"\n{CommandFindBookReleaseYear} - По году выпуска книги." + $"\n{CommandGoToMainMenu} - Выйти в главное меню."); 
 
             while (isWorking)
             {
-                Console.Write("\nВвод: ");
+                Console.Write("\nПоиск по параметру: ");
                 string userInput = Console.ReadLine();
 
                 if (CommandFindBookNumber == userInput)
@@ -137,22 +137,22 @@ namespace OOP5
                     }
 
                     Console.Write("Введите порядковый номер для поиска книги - ");
-                    string searchSequenceNumber = Console.ReadLine();
+                    string searchSerialNumber = Console.ReadLine(); 
 
-                    bool isSuccess = int.TryParse(searchSequenceNumber, out int SequenceNumber);
+                    bool isSuccess = int.TryParse(searchSerialNumber, out int serialNumber);
 
                     if (isSuccess)
                     {
                         for (int i = 0; i < _volumeStorage.Count; i++)
                         {
-                            if (SequenceNumber == _volumeStorage[i].SequenceNumber)
+                            if (serialNumber == _volumeStorage[i].SequenceNumber)
                             {
                                 Console.WriteLine("\nПорядковый номер - " + _volumeStorage[i].SequenceNumber + "\nНазвание книги - " + _volumeStorage[i].Name
                                     + "\nАвтор книги - " + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
                             }
                             else
                             {
-                                Console.WriteLine("Ошибка. Неверный ввод.");
+                                Console.WriteLine("Ошибка. Такого номера нет в списке.");
                             }
                         }
                     }
@@ -161,7 +161,7 @@ namespace OOP5
                         Console.WriteLine("Ошибка. Неверный ввод.");
                     }
                 }
-                else if (CommandFindBookTitle == userInput)
+                else if (CommandFindNameBook == userInput)
                 {
                     for (int i = 0; i < _volumeStorage.Count; i++)
                     {
@@ -169,18 +169,18 @@ namespace OOP5
                     }
 
                     Console.Write("Введите название для поиска книги - ");
-                    string searchName = Console.ReadLine();
+                    string searchNameBook = Console.ReadLine();
 
                     for (int i = 0; i < _volumeStorage.Count; i++)
                     {
-                        if (searchName == _volumeStorage[i].Name)
+                        if (searchNameBook == _volumeStorage[i].Name)
                         {
                             Console.WriteLine("\nПорядковый номер - " + _volumeStorage[i].SequenceNumber + "\nНазвание книги - " + _volumeStorage[i].Name
                                 + "\nАвтор книги - " + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
                         }
                         else
                         {
-                            Console.WriteLine("Ошибка. Такого названия нет в хранилище. Попробуйте ещё раз.");
+                            Console.WriteLine("Ошибка. Такого названия нет в хранилище книг. Попробуйте ещё раз.");
                         }
                     }
                 }
@@ -192,18 +192,18 @@ namespace OOP5
                     }
 
                     Console.Write("Введите автора для поиска книги - ");
-                    string searchAuthor = Console.ReadLine();
+                    string searchAuthorBook = Console.ReadLine();
 
                     for (int i = 0; i < _volumeStorage.Count; i++)
                     {
-                        if (searchAuthor == _volumeStorage[i].Author)
+                        if (searchAuthorBook == _volumeStorage[i].Author)
                         {
                             Console.WriteLine("\nПорядковый номер - " + _volumeStorage[i].SequenceNumber + "\nНазвание книги - " + _volumeStorage[i].Name
                                 + "\nАвтор книги - " + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
                         }
                         else
                         {
-                            Console.WriteLine("Ошибка. Такого автора нет в хранилище. Попробуйте ещё раз.");
+                            Console.WriteLine("Ошибка. Такого автора нет в хранилище книг. Попробуйте ещё раз.");
                         }
                     }
                 }
@@ -217,16 +217,20 @@ namespace OOP5
                     Console.Write("Введите год выпуска для поиска книги - ");
                     string searchYearIssue = Console.ReadLine();
 
-                    bool isSuccess = int.TryParse(searchYearIssue, out int YearIssue);
+                    bool isSuccess = int.TryParse(searchYearIssue, out int yearIssue);
 
                     if (isSuccess)
                     {
                         for (int i = 0; i < _volumeStorage.Count; i++)
                         {
-                            if (YearIssue == _volumeStorage[i].YearIssue)
+                            if (yearIssue == _volumeStorage[i].YearIssue)
                             {
                                 Console.WriteLine("\nПорядковый номер - " + _volumeStorage[i].SequenceNumber + "\nНазвание книги - " + _volumeStorage[i].Name
                                     + "\nАвтор книги - " + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Ошибка. Такого года нет в списке.");
                             }
                         }
                     }
