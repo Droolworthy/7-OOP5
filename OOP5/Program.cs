@@ -60,23 +60,34 @@ namespace OOP5
 
         public void AddBook()
         {
-            Console.WriteLine("Порядковый номер добавлен.");
-
             Console.Write("Введите название книги: ");
             string bookTitle = Console.ReadLine();
+            Console.WriteLine("Название добавлено.");
 
             Console.Write("Введите автора книги: ");
             string writer = Console.ReadLine();
+            Console.WriteLine("Автор добавлен.");
 
             Console.Write("Введите год выпуска книги: ");
-            int issueDate = Convert.ToInt32(Console.ReadLine());
+            string userInput = Console.ReadLine();
+
+            bool isSuccess = int.TryParse(userInput, out int issueDate);
+
+            if (isSuccess)
+            {
+                Console.WriteLine("Год добавлен.");
+            }
+            else
+            {
+                Console.WriteLine("Ошибка. Неверный ввод");
+            }
 
             _volumeStorage.Add(new Book(bookTitle, writer, issueDate));
         }
 
         public void RemoveBook()
         {
-            Console.Write("Введите порядковый номер, чтобы убрать из хранилища - ");
+            Console.Write("Введите номер, чтобы убрать книгу из хранилища - ");
             string userInput = Console.ReadLine();
 
             bool isSuccess = int.TryParse(userInput, out int serialNumber);
@@ -85,7 +96,7 @@ namespace OOP5
             {
                 for (int i = 0; i < _volumeStorage.Count; i++)
                 {
-                    if (serialNumber == _volumeStorage[i].SequenceNumber)
+                    if (serialNumber == i)
                     {
                         _volumeStorage.RemoveAt(i);
                         Console.WriteLine("Вы убрали книгу.");
@@ -106,62 +117,29 @@ namespace OOP5
         {
             for(int i = 0; i < _volumeStorage.Count; i++)
             {
-                Console.WriteLine("\nПорядковый номер - " + _volumeStorage[i].SequenceNumber + "\nНазвание книги - " + _volumeStorage[i].Name + 
-                    "\nАвтор - " + _volumeStorage[i].Author + "\nГод выпуска - " + _volumeStorage[i].YearIssue);
+                Console.WriteLine("\nНомер - " + i + "\nНазвание книги - " + _volumeStorage[i].Name + "\nАвтор - " 
+                    + _volumeStorage[i].Author + "\nГод выпуска - " + _volumeStorage[i].YearIssue);
             }
         }
 
         public void ShowAllBooksSpecifiedParameter() 
         {
-            const string CommandFindBookNumber = "1";
-            const string CommandFindNameBook = "2"; 
-            const string CommandFindBookAuthor = "3";
-            const string CommandFindBookReleaseYear = "4";
-            const string CommandGoToMainMenu = "5";
+            const string CommandFindNameBook = "1"; 
+            const string CommandFindBookAuthor = "2";
+            const string CommandFindBookReleaseYear = "3";
+            const string CommandGoToMainMenu = "4";
 
             bool isWorking = true;
 
-            Console.WriteLine("\nПо какому параметру вы хотите найти книгу?" + $"\n{CommandFindBookNumber} - По порядковому номеру." + $"\n{CommandFindNameBook} - По названию книги." 
-                + $"\n{CommandFindBookAuthor} - По автору книги." + $"\n{CommandFindBookReleaseYear} - По году выпуска книги." + $"\n{CommandGoToMainMenu} - Выйти в главное меню."); 
+            Console.WriteLine("\nПо какому параметру вы хотите найти книгу?" + $"\n{CommandFindNameBook} - По названию книги." + $"\n{CommandFindBookAuthor} " +
+                $"- По автору книги." + $"\n{CommandFindBookReleaseYear} - По году выпуска книги." + $"\n{CommandGoToMainMenu} - Выйти в главное меню."); 
 
             while (isWorking)
             {
                 Console.Write("\nПоиск по параметру: ");
                 string userInput = Console.ReadLine();
 
-                if (CommandFindBookNumber == userInput)
-                {
-                    for (int i = 0; i < _volumeStorage.Count; i++)
-                    {
-                        Console.WriteLine("Найден порядковый номер - " + _volumeStorage[i].SequenceNumber);
-                    }
-
-                    Console.Write("Введите порядковый номер для поиска книги - ");
-                    string searchSerialNumber = Console.ReadLine(); 
-
-                    bool isSuccess = int.TryParse(searchSerialNumber, out int serialNumber);
-
-                    if (isSuccess)
-                    {
-                        for (int i = 0; i < _volumeStorage.Count; i++)
-                        {
-                            if (serialNumber == _volumeStorage[i].SequenceNumber)
-                            {
-                                Console.WriteLine("\nПорядковый номер - " + _volumeStorage[i].SequenceNumber + "\nНазвание книги - " + _volumeStorage[i].Name
-                                    + "\nАвтор книги - " + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Ошибка. Такого номера нет в списке.");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ошибка. Неверный ввод.");
-                    }
-                }
-                else if (CommandFindNameBook == userInput)
+                if (CommandFindNameBook == userInput)
                 {
                     for (int i = 0; i < _volumeStorage.Count; i++)
                     {
@@ -175,8 +153,8 @@ namespace OOP5
                     {
                         if (searchNameBook == _volumeStorage[i].Name)
                         {
-                            Console.WriteLine("\nПорядковый номер - " + _volumeStorage[i].SequenceNumber + "\nНазвание книги - " + _volumeStorage[i].Name
-                                + "\nАвтор книги - " + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
+                            Console.WriteLine("\nНазвание книги - " + _volumeStorage[i].Name+ "\nАвтор книги - " 
+                                + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
                         }
                         else
                         {
@@ -198,8 +176,8 @@ namespace OOP5
                     {
                         if (searchAuthorBook == _volumeStorage[i].Author)
                         {
-                            Console.WriteLine("\nПорядковый номер - " + _volumeStorage[i].SequenceNumber + "\nНазвание книги - " + _volumeStorage[i].Name
-                                + "\nАвтор книги - " + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
+                            Console.WriteLine("\nНазвание книги - " + _volumeStorage[i].Name+ "\nАвтор книги - " 
+                                + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
                         }
                         else
                         {
@@ -225,8 +203,8 @@ namespace OOP5
                         {
                             if (yearIssue == _volumeStorage[i].YearIssue)
                             {
-                                Console.WriteLine("\nПорядковый номер - " + _volumeStorage[i].SequenceNumber + "\nНазвание книги - " + _volumeStorage[i].Name
-                                    + "\nАвтор книги - " + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
+                                Console.WriteLine("\nНазвание книги - " + _volumeStorage[i].Name + "\nАвтор книги - " 
+                                    + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
                             }
                             else
                             {
@@ -253,17 +231,12 @@ namespace OOP5
 
     class Book
     {
-        private static int _identifications;
-
         public Book(string bookTitle, string writer, int issueDate)
         {
-            SequenceNumber = ++_identifications;
             Name = bookTitle;
             Author = writer;
             YearIssue = issueDate;
         }
-
-        public int SequenceNumber { get; private set; }
 
         public string Name { get; private set; }
 
