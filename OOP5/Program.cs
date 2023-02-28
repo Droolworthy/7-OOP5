@@ -79,7 +79,7 @@ namespace OOP5
             }
             else
             {
-                Console.WriteLine("Ошибка. Неверный ввод");
+                Console.WriteLine("Ошибка. Неверный ввод.");
             }
 
             _volumeStorage.Add(new Book(bookTitle, writer, issueDate));
