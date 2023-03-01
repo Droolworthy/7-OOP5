@@ -79,7 +79,7 @@ namespace OOP5
             }
             else
             {
-                Console.WriteLine("Ошибка. Неверный ввод.");
+                Console.WriteLine("Ошибка. Неверный ввод");
             }
 
             _volumeStorage.Add(new Book(bookTitle, writer, issueDate));
@@ -139,85 +139,13 @@ namespace OOP5
                 Console.Write("\nПоиск по параметру: ");
                 string userInput = Console.ReadLine();
 
-                if (CommandFindNameBook == userInput)
-                {
-                    for (int i = 0; i < _volumeStorage.Count; i++)
-                    {
-                        Console.WriteLine("Найдено название книги - " + _volumeStorage[i].Name);
-                    }
+                SearchBookName(userInput);
 
-                    Console.Write("Введите название для поиска книги - ");
-                    string searchNameBook = Console.ReadLine();
+                SearchBookAuthor(userInput);
 
-                    for (int i = 0; i < _volumeStorage.Count; i++)
-                    {
-                        if (searchNameBook == _volumeStorage[i].Name)
-                        {
-                            Console.WriteLine("\nНазвание книги - " + _volumeStorage[i].Name+ "\nАвтор книги - " 
-                                + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Ошибка. Такого названия нет в хранилище книг. Попробуйте ещё раз.");
-                        }
-                    }
-                }
-                else if (CommandFindBookAuthor == userInput)
-                {
-                    for (int i = 0; i < _volumeStorage.Count; i++)
-                    {
-                        Console.WriteLine("Найден автор - " + _volumeStorage[i].Author);
-                    }
-
-                    Console.Write("Введите автора для поиска книги - ");
-                    string searchAuthorBook = Console.ReadLine();
-
-                    for (int i = 0; i < _volumeStorage.Count; i++)
-                    {
-                        if (searchAuthorBook == _volumeStorage[i].Author)
-                        {
-                            Console.WriteLine("\nНазвание книги - " + _volumeStorage[i].Name+ "\nАвтор книги - " 
-                                + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Ошибка. Такого автора нет в хранилище книг. Попробуйте ещё раз.");
-                        }
-                    }
-                }
-                else if (CommandFindBookReleaseYear == userInput)
-                {
-                    for (int i = 0; i < _volumeStorage.Count; i++)
-                    {
-                        Console.WriteLine("Найден год выпуска - " + _volumeStorage[i].YearIssue);
-                    }
-
-                    Console.Write("Введите год выпуска для поиска книги - ");
-                    string searchYearIssue = Console.ReadLine();
-
-                    bool isSuccess = int.TryParse(searchYearIssue, out int yearIssue);
-
-                    if (isSuccess)
-                    {
-                        for (int i = 0; i < _volumeStorage.Count; i++)
-                        {
-                            if (yearIssue == _volumeStorage[i].YearIssue)
-                            {
-                                Console.WriteLine("\nНазвание книги - " + _volumeStorage[i].Name + "\nАвтор книги - " 
-                                    + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Ошибка. Такого года нет в списке.");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ошибка. Неверный ввод.");
-                    }
-                }
-                else if (CommandGoToMainMenu == userInput)
+                SearchBookYearIssue(userInput);               
+                
+                if (CommandGoToMainMenu == userInput)
                 {
                     return;
                 }
@@ -225,6 +153,98 @@ namespace OOP5
                 {
                     Console.WriteLine("Ошибка. Попробуйте ещё раз.");
                 }              
+            }
+        }
+
+        private void SearchBookName(string userInput)
+        {
+            const string CommandFindNameBook = "1";
+
+            if (CommandFindNameBook == userInput)
+            {
+                for (int i = 0; i < _volumeStorage.Count; i++)
+                {
+                    Console.WriteLine("Найдено название книги - " + _volumeStorage[i].Name);
+                }
+
+                Console.Write("Введите название для поиска книги - ");
+                string searchNameBook = Console.ReadLine();
+
+                for (int i = 0; i < _volumeStorage.Count; i++)
+                {
+                    if (searchNameBook.ToLower() == _volumeStorage[i].Name.ToLower())
+                    {
+                        Console.WriteLine("\nНазвание книги - " + _volumeStorage[i].Name + "\nАвтор книги - "
+                            + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ошибка. Такого названия нет в хранилище книг. Попробуйте ещё раз.");
+                    }
+                }
+            }
+        }
+
+        private void SearchBookAuthor(string userInput)
+        {
+            const string CommandFindBookAuthor = "2";
+
+            if (CommandFindBookAuthor == userInput)
+            {
+                for (int i = 0; i < _volumeStorage.Count; i++)
+                {
+                    Console.WriteLine("Найден автор - " + _volumeStorage[i].Author);
+                }
+
+                Console.Write("Введите автора для поиска книги - ");
+                string searchAuthorBook = Console.ReadLine();
+
+                for (int i = 0; i < _volumeStorage.Count; i++)
+                {
+                    if (searchAuthorBook.ToLower() == _volumeStorage[i].Author.ToLower())
+                    {
+                        Console.WriteLine("\nНазвание книги - " + _volumeStorage[i].Name + "\nАвтор книги - "
+                            + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ошибка. Такого автора нет в хранилище книг. Попробуйте ещё раз.");
+                    }
+                }
+            }
+        }
+
+        private void SearchBookYearIssue(string userInput)
+        {
+            const string CommandFindBookReleaseYear = "3";
+
+            if (CommandFindBookReleaseYear == userInput)
+            {
+                for (int i = 0; i < _volumeStorage.Count; i++)
+                {
+                    Console.WriteLine("Найден год выпуска - " + _volumeStorage[i].YearIssue);
+                }
+
+                Console.Write("Введите год выпуска для поиска книги - ");
+                string searchYearIssue = Console.ReadLine();
+
+                bool isSuccess = int.TryParse(searchYearIssue, out int yearIssue);
+
+                if (isSuccess)
+                {
+                    for (int i = 0; i < _volumeStorage.Count; i++)
+                    {
+                        if (yearIssue == _volumeStorage[i].YearIssue)
+                        {
+                            Console.WriteLine("\nНазвание книги - " + _volumeStorage[i].Name + "\nАвтор книги - "
+                                + _volumeStorage[i].Author + "\nГод выпуска книги - " + _volumeStorage[i].YearIssue);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ошибка. Такого года нет в списке.");
+                        }
+                    }
+                }
             }
         }
     }
